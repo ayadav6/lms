@@ -36,16 +36,47 @@ Features:
 Assignment Notifications: Students receive notifications when new assignments are posted or when deadlines are approaching.
 Grading Notifications: Students are notified when an assignment has been graded.
 
-Project Setup
-Prerequisites:
-Java 8+
-Maven
-H2
+Project Setup Prerequisites:
+1. Java 8+
+2. Maven
+3. H2
 
-Contributors
+Code Branches and Workflow 
+1. master: Stable, production-ready code.
+2. dev: Active development branch where features are merged.
+3. Each team member works on feature-specific branches.
+
+Merging Workflow
+1. Develop your feature on a separate branch.
+2. Ensure your code passes unit tests.
+3. Merge into dev after peer review.
+4. Weekly team meetings to resolve merge conflicts.
+
+Milestones
+
+Milestone 1: Initial project setup and prototype. Focus on setting up GitHub, project structure, database, and skeleton code.
+
+Milestone 2: Complete the persistence layer (database integration and functionality).
+
+Milestone 3: Finalize all features and non-persistence layers, such as frontend and logic.
+
+Final Submission: Complete and polished LMS with all features implemented, tested, and documented.
+
+Development Tools and Standards
+1. IDE: IntelliJ or VS Code.
+2. Coding Standards: Follow the Google Java Style Guide.
+3. Version Control: Weekly code merges to resolve conflicts and sync changes.
+
+Contributors:
+
 Your Name (GitHub: @yourusername)
+
 Teammate 1 (GitHub: @teammate1)
+
 Teammate 2 (GitHub: @teammate2)
+
 Teammate 3 (GitHub: @teammate3)
+
 Teammate 4 (GitHub: @teammate2)
+
 Teammate 5 (GitHub: @teammate3)
