@@ -67,16 +67,14 @@ Development Tools and Standards
 2. Coding Standards: Follow the Google Java Style Guide.
 3. Version Control: Weekly code merges to resolve conflicts and sync changes.
 
-Contributors
+Team Members & Responsibilities
 
-Your Name (GitHub: @yourusername)
+| Name      | GitHub Username | Feature                  | 
+|-----------|-----------------|--------------------------|
+| Member 1  | @teammate1      | User Management          |
+| Member 2  | @teammate2      | Course Management        |
+| Member 3  | @teammate3      | Assessment and Grading   |
+| Member 4  | @teammate4      | Discussion Forum         |
+| Member 5  | @teammate5      | Analytics and Reporting  |
 
-Teammate 1 (GitHub: @teammate1)
 
-Teammate 2 (GitHub: @teammate2)
-
-Teammate 3 (GitHub: @teammate3)
-
-Teammate 4 (GitHub: @teammate2)
-
-Teammate 5 (GitHub: @teammate3)
