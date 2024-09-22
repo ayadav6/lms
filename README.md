@@ -36,7 +36,7 @@ Features:
 Assignment Notifications: Students receive notifications when new assignments are posted or when deadlines are approaching.
 Grading Notifications: Students are notified when an assignment has been graded.
 
-Project Setup Prerequisites:
+Project Setup Prerequisites
 1. Java 8+
 2. Maven
 3. H2
@@ -67,7 +67,7 @@ Development Tools and Standards
 2. Coding Standards: Follow the Google Java Style Guide.
 3. Version Control: Weekly code merges to resolve conflicts and sync changes.
 
-Contributors:
+Contributors
 
 Your Name (GitHub: @yourusername)
 
