@@ -1,5 +1,6 @@
 package edu.depaul.cdm.se452.course;
 
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -48,5 +49,4 @@ public class Course {
         this.status = status;
         this.instructor = instructor;
     }
-
 }
