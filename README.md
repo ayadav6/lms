@@ -37,9 +37,9 @@ Assignment Notifications: Students receive notifications when new assignments ar
 Grading Notifications: Students are notified when an assignment has been graded.
 
 Project Setup Prerequisites
-1. Java 8+
+1. Java 21
 2. Maven
-3. H2
+3. SQL/NoSQL
 
 Code Branches and Workflow 
 1. master: Stable, production-ready code.
@@ -49,8 +49,14 @@ Code Branches and Workflow
 Merging Workflow
 1. Develop your feature on a separate branch.
 2. Ensure your code passes unit tests.
-3. Merge into dev after peer review.
+3. Merge into master after peer review.
 4. Weekly team meetings to resolve merge conflicts.
+
+
+Meeting Journal
+We will be using microsoft teams for weekly meetings and code reviews.
+
+
 
 Milestones
 
@@ -69,12 +75,12 @@ Development Tools and Standards
 
 Team Members & Responsibilities
 
-| Name      | GitHub Username | Feature                  | 
-|-----------|-----------------|--------------------------|
-| Member 1  | @teammate1      | User Management          |
-| Member 2  | @teammate2      | Course Management        |
-| Member 3  | @teammate3      | Assessment and Grading   |
-| Member 4  | @teammate4      | Discussion Forum         |
-| Member 5  | @teammate5      | Analytics and Reporting  |
+| Name      | GitHub Username             | Feature                  | 
+|-----------|-----------------------------|--------------------------|
+| Member 1  | ayadav6                     | User Management          |
+| Member 2  | JayalakshmiJayaprakash      | Course Management        |
+| Member 3  | ssamala1-code               | Assessment and Grading   |
+| Member 4  | Dhairya4256                 | Discussion Forum         |
+| Member 5  | shaunjiji                   | Notification             |
 
 
