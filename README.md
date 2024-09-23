@@ -80,7 +80,7 @@ Team Members & Responsibilities
 | Member 1  | ayadav6                     | User Management          |
 | Member 2  | JayalakshmiJayaprakash      | Course Management        |
 | Member 3  | ssamala1-code               | Assessment and Grading   |
-| Member 4  | shaunjiji                   | Discussion Forum         |
-| Member 5  | Dhairya4256                 | Notification             |
+| Member 4  | Dhairya4256                 | Discussion Forum         |
+| Member 5  | shaunjiji                   | Notification             |
 
 
