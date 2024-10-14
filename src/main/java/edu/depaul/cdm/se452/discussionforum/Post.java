@@ -1,4 +1,4 @@
-package edu.depaul.cdm.se452.discussion;
+package edu.depaul.cdm.se452.discussionforum;
 
 import edu.depaul.cdm.se452.user.User;
 import jakarta.persistence.*;
@@ -8,8 +8,8 @@ import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Data   // Lombok annotation to generate getters, setters, equals, hashCode, toString
-@EqualsAndHashCode(callSuper = false)  // Not calling any parent class equals/hashCode
+@Data
+@EqualsAndHashCode(callSuper = false)
 public abstract class Post {
 
     @Id
@@ -24,12 +24,12 @@ public abstract class Post {
 
     private LocalDateTime createdAt;
 
-    // Constructor sets the current timestamp for createdAt
+
     public Post() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Optional constructor with fields
+
     public Post(String content, User createdBy) {
         this.content = content;
         this.createdBy = createdBy;

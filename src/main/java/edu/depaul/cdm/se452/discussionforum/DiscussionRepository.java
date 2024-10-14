@@ -1,4 +1,4 @@
-package edu.depaul.cdm.se452.discussion;
+package edu.depaul.cdm.se452.discussionforum;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
