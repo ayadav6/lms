@@ -1,6 +1,5 @@
 package edu.depaul.cdm.se452.discussion;
 
-import edu.depaul.cdm.se452.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,11 +16,4 @@ public class Reply extends Post {
     @JoinColumn(name = "comment_id", nullable = false)
     private Comment comment;
 
-    // Constructors
-    public Reply() {}
-
-    public Reply(String content, User createdBy, Comment comment) {
-        super(content, createdBy);
-        this.comment = comment;
-    }
 }
