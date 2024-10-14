@@ -1,11 +1,13 @@
 package edu.depaul.cdm.se452.course;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import java.time.LocalDate;
 
 import edu.depaul.cdm.se452.user.User;
 
 @Entity
+@Data
 @Table(name = "Enrollment")
 public class Enrollment {
 
@@ -13,7 +15,6 @@ public class Enrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long enrollmentId;
 
-    @Column(nullable = false)
     private LocalDate enrollmentDate;
 
     // Many enrollments refer to one course
@@ -26,14 +27,14 @@ public class Enrollment {
     @JoinColumn(name = "student_id", nullable = false)
     private User student;
 
-    // Constructors, Getters, and Setters
+    // No-arg constructor for JPA
     public Enrollment() {
     }
 
-    public Enrollment(LocalDate enrollmentDate, String grade, Course course, User student) {
+    // Custom constructor
+    public Enrollment(LocalDate enrollmentDate, Course course, User student) {
         this.enrollmentDate = enrollmentDate;
         this.course = course;
         this.student = student;
     }
-
 }
