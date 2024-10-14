@@ -1,6 +1,5 @@
 package edu.depaul.cdm.se452.discussion;
 
-import edu.depaul.cdm.se452.course.Course;
 import edu.depaul.cdm.se452.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,18 +7,17 @@ import lombok.Data;
 @Entity
 @Data   // Lombok annotation to generate getters, setters, etc.
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Discussion extends Post {
+public class Comment extends Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
+    @JoinColumn(name = "discussion_id", nullable = false)
+    private Discussion discussion;
 
     // Constructors
-    public Discussion() {}
+    public Comment() {}
 
-    public Discussion(String content, User createdBy, Course course) {
+    public Comment(String content, User createdBy, Discussion discussion) {
         super(content, createdBy);
-        this.course = course;
+        this.discussion = discussion;
     }
 }
-
