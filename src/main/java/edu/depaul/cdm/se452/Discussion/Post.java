@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-@Data   // Lombok annotation to generate getters, setters, etc.
+@Data
 public abstract class Post {
 
     @Id
@@ -22,14 +22,9 @@ public abstract class Post {
 
     private LocalDateTime createdAt;
 
-    // Constructor sets current timestamp for createdAt
+    // Constructor for setting the createdAt timestamp
     public Post() {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Post(String content, User createdBy) {
-        this.content = content;
-        this.createdBy = createdBy;
-        this.createdAt = LocalDateTime.now();
-    }
 }
