@@ -1,6 +1,7 @@
 package edu.depaul.cdm.se452.notification;
+import jakarta.persistence.*;
 import lombok.*;
-import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.List;
 public class Notification {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer notificationId;
 
     @ManyToOne
@@ -31,8 +32,5 @@ public class Notification {
     private Boolean isRead = false; // Has the notification been read?
 
     @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL)
-    private List<AssignmentNotification> assignmentNotifications;
-
-    @OneToMany(mappedBy = "notification", cascade = CascadeType.ALL)
-    private List<GradingNotification> gradingNotifications;
+    private List<BaseNotification> baseNotifications; // Generalized list of notifications
 }

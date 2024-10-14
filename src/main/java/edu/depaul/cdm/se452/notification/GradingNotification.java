@@ -1,29 +1,22 @@
 package edu.depaul.cdm.se452.notification;
+import jakarta.persistence.*;
 import lombok.*;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "GradingNotification")
+@PrimaryKeyJoinColumn(name = "notification_id")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GradingNotification {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer gradingNotificationId;
+public class GradingNotification extends BaseNotification {
 
     @ManyToOne
-    @JoinColumn(name = "notification_id", nullable = false)
-    private Notification notification; // Foreign key referencing base notification
+    @JoinColumn(name = "assignment_id", nullable = false)
+    private Assignment assignment; // Reference to the Assignment entity
 
-    @Column(name = "assignment_id", nullable = false)
-    private Integer assignmentId; // ID of the graded assignment
-
-    @Column(name = "grade", precision = 3, scale = 0) // Grade received for the assignment
-    @Min(1) // Minimum score is 1
-    @Max(100) // Maximum score is 100
-    private Integer grade; // Change to Integer for whole number scores
+    @ManyToOne
+    @JoinColumn(name = "grade_id", nullable = false)
+    private Grade grade; // Reference to the Grade entity
 
     @Column(name = "feedback")
     private String feedback; // Feedback given by the instructor
