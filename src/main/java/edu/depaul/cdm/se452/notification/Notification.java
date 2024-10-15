@@ -4,6 +4,8 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+import edu.depaul.cdm.se452.user.User;
+
 @Entity
 @Table(name = "Notification")
 @Data
