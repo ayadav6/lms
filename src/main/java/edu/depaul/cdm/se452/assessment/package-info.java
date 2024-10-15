@@ -1,5 +1,4 @@
 package edu.depaul.cdm.se452.assessment;
-
 /*
  * @author : Sweta Yellayya Samala
  * 
@@ -12,13 +11,15 @@ package edu.depaul.cdm.se452.assessment;
  *  --Submission: for handling student submissions.
  *  --Grade: for recording grades given by instructors.
  * 
+ * 
  * 2. Repository Layer:
  *  --Created repositories ('AssignmentRepository', 'SubmissionRepository', 'GradeRepository')
+ * 
  * 
  * 3. Database Setup:
  * 
  * 4. Interaction with Other Modules:
- * This would interact with below modules to provide a cohesive learning experience.:
+ * This interacts with below modules to provide a cohesive learning experience.:
  *  --User module
  *  --Course module
  * 
