@@ -28,7 +28,6 @@
  *       - The `Discussion` entity is linked to a specific course via the `course_id` field.
  *
  *
- *
  */
 
 package edu.depaul.cdm.se452.discussionforum;
