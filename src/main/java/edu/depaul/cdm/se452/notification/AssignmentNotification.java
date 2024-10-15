@@ -1,4 +1,7 @@
 package edu.depaul.cdm.se452.notification;
+import java.sql.Timestamp;
+
+import edu.depaul.cdm.se452.assessment.Assignment;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package test.test.assessment;
+package edu.depaul.cdm.se452.assessment;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
