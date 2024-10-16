@@ -5,8 +5,8 @@ import java.util.List;
 
 import edu.depaul.cdm.se452.course.Course;
 import jakarta.persistence.*;
-		import lombok.Data;
-import lombok.Getter;
+import lombok.Data;
+
 
 @Data
 @Entity
