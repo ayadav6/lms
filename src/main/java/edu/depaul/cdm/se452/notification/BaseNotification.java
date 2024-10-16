@@ -12,9 +12,10 @@ public abstract class BaseNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "base_notification_id")
     private Integer notificationId;
 
     @ManyToOne
-    @JoinColumn(name = "notification_id", nullable = false)
+    @JoinColumn(name = "base_notification_notification_id", nullable = false)
     private Notification notification; // Reference to the Notification entity
 }
