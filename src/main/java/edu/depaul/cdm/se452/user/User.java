@@ -5,32 +5,33 @@ import java.util.List;
 
 import edu.depaul.cdm.se452.course.Course;
 import jakarta.persistence.*;
-import lombok.Data;
+		import lombok.Data;
 import lombok.Getter;
 
 @Data
 @Entity
-@Table(name = "User")
+@Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	private String userName;
-	
+
 	private String password;
-	
+
+	@Enumerated(EnumType.STRING)
 	private Role role;
-	
+
 	private String email;
-	
+
 	private LocalDateTime createdAt;
-	
-	@OneToMany
+
+	@OneToMany(mappedBy = "instructor")
 	private List<Course> courseList;
-	
+
 	public enum Role {
-        STUDENT, INSTRUCTOR
-    }
+		STUDENT, INSTRUCTOR
+	}
 }
