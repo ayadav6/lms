@@ -16,6 +16,6 @@ public abstract class BaseNotification {
     private Integer notificationId;
 
     @ManyToOne
-    @JoinColumn(name = "base_notification_notification_id", nullable = false)
+    @JoinColumn(name = "notification_id", nullable = false)
     private Notification notification; // Reference to the Notification entity
 }
