@@ -62,7 +62,29 @@ Milestones
 
 Milestone 1: Initial project setup and prototype. Focus on setting up GitHub, project structure, database, and skeleton code.
 
-Milestone 2: Complete the persistence layer (database integration and functionality).
+Milestone 2:
+
+Scope: Complete the persistence layer with database integration and functionality.
+
+Persistence Layer:
+- The persistence layer is implemented using a H2 database.
+- We have used the Table per Class strategy.
+
+Decisions Made:
+
+- Decided to use separate branches for each feature and merging after all the conflicts have been resolved.
+- Decided to use Lombok annotations like @Data.
+- We decided to store data in H2 database for easy development and testing.
+- Decided to implement Table per Class concept.
+
+Lessons Learned:
+
+- From now onwards we have decided to use separate branches for each feature and merging after all the conflicts have been resolved.
+- Lombok annotations like @Data saved development time by eliminating the need for manual getter/setter generation.
+- The Table per Class strategy reduces redundancy by storing common information in each table only once, keeping the database cleaner and more organized. Each class (e.g., Discussion, Comment, Reply) has its own table but shares common fields like content and created by.
+- H2 Database: It was useful for fast development and testing, but we plan to switch to a more reliable database for the final version of the project when it is deployed.
+
+
 
 Milestone 3: Finalize all features and non-persistence layers, such as frontend and logic.
 
@@ -71,7 +93,7 @@ Final Submission: Complete and polished LMS with all features implemented, teste
 Development Tools and Standards
 1. IDE: IntelliJ or VS Code.
 2. Coding Standards: Follow the Google Java Style Guide.
-3. Version Control: Weekly code merges to resolve conflicts and sync changes.Dhairya4256
+3. Version Control: Weekly code merges to resolve conflicts and sync changes.
 
 Team Members & Responsibilities
 
