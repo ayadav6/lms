@@ -12,6 +12,7 @@ public abstract class BaseNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "base_notification_id")
     private Integer notificationId;
 
     @ManyToOne
