@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -53,8 +52,7 @@ public class UserTest {
         course.setName("Math 101");
         course.setStartDate(LocalDateTime.now().toLocalDate());
         course.setEndDate(LocalDateTime.now().plusMonths(3).toLocalDate());
-        course.setStatus("Active");
-        course.setInstructor(testUser);  // Linking to the user as instructor
+        course.setInstructor(testUser); // Linking to the user as instructor
 
         // Add the course to the user's course list
         testUser.setCourseList(Collections.singletonList(course));
