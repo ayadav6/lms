@@ -3,29 +3,33 @@ package edu.depaul.cdm.se452.assessment;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.sql.Timestamp;
-import edu.depaul.cdm.se452.course.Course;
+import edu.depaul.cdm.se452.course.*;
 
-@Data
 @Entity
-@Table(name = "Assignment")
+@Data
 public class Assignment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
     private String description;
+    private Timestamp dueDate;
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course; 
 
-    private Timestamp dueDate;
-
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    private String fileName;
+
+    @Lob  
+    private byte[] fileData;
+    private String fileType;
+
 }
