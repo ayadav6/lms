@@ -19,11 +19,11 @@ public class NotificationServiceImpl implements NotificationService{
     private NotificationRepository notificationRespository;
 
     @Autowired
-    private UserRepository userRespository;
+    private UserRepository userRepository;
 
     @Override
     public void sendAssignmentNotification(Assignment assignment, Long courseId){
-        List<User> users = userRespository.findByCourseId(courseId) // Fetch users in the course
+        List<User> users = userRepository.findByCourseId(courseId) // Fetch users in the course
 
         for (User user : users){
             Notification notification = new AssignmentNotification();
