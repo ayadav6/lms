@@ -23,6 +23,27 @@ package edu.depaul.cdm.se452.assessment;
  *  --User module
  *  --Course module
  * 
+ * 5. controllers:
+ * This package contains REST controllers for handling HTTP requests related to the Assessment module as below:
+ * – AssignmentController
+ * – SubmissionController
+ * – GradeController
+ * 
+ * 6. services:
+ * This package contains the service layer for the Assessment module, which includes business logic and interactions with repositories for: 
+ * – Assignments: creation, retrieval, and management
+ * – Submissions: handling of submission files and data
+ * – Grades: grading logic
+ * 
+ * 7. DTO:
+ * This package contains Data Transfer Objects (DTOs) for the Assessment module. DTOs provide a simplified and secure way to transfer data between different layers:
+ * – AssignmentDTO
+ * – SubmissionDTO
+ * – GradeDTO
+ * DTOs help in encapsulating and transferring only required fields.
+ * 
+ * 
+ *
  */
 
  
