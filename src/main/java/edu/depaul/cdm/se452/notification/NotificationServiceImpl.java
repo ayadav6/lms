@@ -16,13 +16,10 @@ import java.util.List;
 public class NotificationServiceImpl implements NotificationService{
 
     @Autowired
-    private NotifificationRepository notificationRespository;
+    private NotificationRepository notificationRespository;
 
     @Autowired
     private UserRepository userRespository;
-
-    @Autowired
-    private CourseRepository courseRespository;
 
     @Override
     public void sendAssignmentNotification(Assignment assignment, Long courseId){
@@ -45,5 +42,25 @@ public class NotificationServiceImpl implements NotificationService{
             notificationRepository.save(notification);
 
         }
+    }
+
+    @Override
+    public void sendGradeNotification(Grade grade) {
+        // Assuming each Grade object has a Submission that can get the student
+        User student = grade.getSubmission().getStudent(); // Get the student user from submission
+
+        GradingNotification gradingNotification = new GradingNotification();
+        gradingNotification.setUser(student); // Set the user being notified
+        gradingNotification.setMessage("Grade Posted for Assignment: " + grade.getSubmission().getAssignment().getTitle());
+        gradingNotification.setNotificationType("grading");
+        gradingNotification.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        gradingNotification.setIsRead(false); // Mark as unread
+
+        // Set the grade and feedback
+        gradingNotification.setGrade(grade);
+        gradingNotification.setFeedback(grade.getFeedback()); // Assuming feedback is provided by the instructor
+
+        // Save the grading notification
+        notificationRepository.save(gradingNotification);
     }
 }

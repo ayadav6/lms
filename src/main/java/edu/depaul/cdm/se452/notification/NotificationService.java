@@ -8,5 +8,5 @@ import edu.depaul.cdm.se452.user.User;
 
 public interface NotificationService {
     void sendAssignmentNotification(Assignment assignment, Long courseId);
-    void sendGradeNotification(Grade grade, Long studentId);
+    void sendGradeNotification(Grade grade);
 }
