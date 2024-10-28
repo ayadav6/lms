@@ -36,15 +36,6 @@ public class AssignmentService {
             return assignment;
     }
 
-    // Save a new assignment
-    // public Assignment createAssignment(Assignment assignment) {
-    //     log.traceEntry("Creating a new assignment: {}", assignment);
-    //     assignment.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-    //     assignment.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-    //     Assignment savedAssignment = assignmentRepository.save(assignment);
-    //     log.traceExit("Assignment created: {}", savedAssignment);
-    //     return savedAssignment;
-    // }
 
     public Assignment createAssignment(Assignment assignment) {
         log.traceEntry("Creating a new assignment: {}", assignment);
