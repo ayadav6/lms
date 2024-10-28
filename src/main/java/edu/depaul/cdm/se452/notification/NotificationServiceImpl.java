@@ -11,25 +11,37 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.ArrayList;
+
 
 @Service
 public class NotificationServiceImpl implements NotificationService{
 
     @Autowired
-    private NotificationRepository notificationRespository;
+    private AssignmentNotificationRepository assignmentNotificationRepository;
+
+    @Autowired
+    private GradingNotificationRepository gradingNotificationRepository;
+
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public void sendAssignmentNotification(Assignment assignment, Long courseId){
-        List<User> users = userRepository.findByCourseId(courseId) // Fetch users in the course
+        // List<User> users = userRepository.getStudentByCourseId(courseId); // Fetch users in the course
+        List<User> users = new ArrayList<>(); // No users will be notified
+
+        if (users == null || users.isEmpty()) {
+            System.out.println("No students found for course ID: " + courseId);
+            return;
+        }
+
 
         for (User user : users){
-            Notification notification = new AssignmentNotification();
+            AssignmentNotification notification = new AssignmentNotification();
             notification.setUser(user); // Set the user being notified
             notification.setMessage("New Assignment Posted: " + assignment.getTitle());
-            notification.setNotificationType("assignment");
             notification.setCreatedDate(new Timestamp(System.currentTimeMillis()));
             notification.setIsRead(false); // Mark as unread
             
@@ -39,7 +51,7 @@ public class NotificationServiceImpl implements NotificationService{
             notification.setDeadline(assignment.getDueDate()); // Assuming dueDate is the deadline
         
             // Save the notification
-            notificationRepository.save(notification);
+            assignmentNotificationRepository.save(notification);
 
         }
     }
@@ -52,7 +64,6 @@ public class NotificationServiceImpl implements NotificationService{
         GradingNotification gradingNotification = new GradingNotification();
         gradingNotification.setUser(student); // Set the user being notified
         gradingNotification.setMessage("Grade Posted for Assignment: " + grade.getSubmission().getAssignment().getTitle());
-        gradingNotification.setNotificationType("grading");
         gradingNotification.setCreatedDate(new Timestamp(System.currentTimeMillis()));
         gradingNotification.setIsRead(false); // Mark as unread
 
@@ -61,6 +72,6 @@ public class NotificationServiceImpl implements NotificationService{
         gradingNotification.setFeedback(grade.getFeedback()); // Assuming feedback is provided by the instructor
 
         // Save the grading notification
-        notificationRepository.save(gradingNotification);
+        gradingNotificationRepository.save(gradingNotification);
     }
 }
