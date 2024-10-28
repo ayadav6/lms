@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(content='this::content')">
+<head>
+  <title th:text="${title}">Create New Discussion</title>
+</head>
+<body>
+<div th:fragment="content">
+  <h1>Create New Discussion</h1>
+  <form th:action="@{/discussion/create}" th:object="${discussionForm}" method="post">
+    <div class="mb-3">
+      <label for="content">Discussion Content</label>
+      <textarea th:field="*{content}" class="form-control" id="content" rows="3" required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="courseId">Course</label>
+      <select th:field="*{courseId}" class="form-select" required>
+        <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}">Course Name</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Discussion</button>
+  </form>
+</div>
+</body>
+</html>

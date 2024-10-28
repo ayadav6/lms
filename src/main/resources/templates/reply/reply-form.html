@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout :: content">
+<head>
+  <title>Add Reply</title>
+</head>
+<body>
+<div class="container">
+  <h1>Add a Reply</h1>
+  <form th:action="@{/templates/reply/add}" th:object="${replyForm}" method="post">
+    <!-- Hidden field for the comment ID -->
+    <input type="hidden" th:field="*{commentId}" th:value="${commentId}"/>
+
+    <!-- Reply content input -->
+    <div class="mb-3">
+      <label for="content" class="form-label">Reply</label>
+      <textarea th:field="*{content}" class="form-control" id="content" rows="3" required></textarea>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary">Submit Reply</button>
+  </form>
+</div>
+</body>
+</html>

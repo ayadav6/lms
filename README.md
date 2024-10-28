@@ -62,16 +62,57 @@ Milestones
 
 Milestone 1: Initial project setup and prototype. Focus on setting up GitHub, project structure, database, and skeleton code.
 
-Milestone 2: Complete the persistence layer (database integration and functionality).
+Milestone 2: Complete the persistence layer with database integration and functionality.
 
-Milestone 3: Finalize all features and non-persistence layers, such as frontend and logic.
+### Milestone 3: 
+
+Scope: Finalize all features and non-persistence layers, such as frontend and logic.
+
+#### Deliverable:
+
+- Each team member has implemented the Service Layer, Controller, DTO, and Unit Tests for their respective modules, which include:
+   - User Management
+   - Course Management
+   - Assessment and Grading
+   - Discussion Forum
+   - Notification
+- Additionally, we configured the H2 database for the project. All tables are now generated and configured, allowing smooth testing and development.
+
+#### Modules and Functionalities Completed:
+
+Each module now has a fully implemented non-persistence layer with:
+
+- Service Layer
+- Controller Layer
+- DTO (Data Transfer Object)
+- Unit Testing
+
+Each team member was responsible for implementing the above layers for their respective module.
+
+#### Database Configuration:
+
+The project uses an H2 database for the following reasons:
+
+- Ease of Setup: H2 is lightweight, making it ideal for development and testing.
+- In-Memory Option: For testing, we utilize the in-memory option, which speeds up test execution and reduces setup time.
+- Automatic Table Generation: Tables for all modules (e.g., User, Course, Assignment, Discussion, Notification) are generated automatically through the JPA annotations and H2 configurations.
+
+#### Decisions Made:
+
+- Service Layer Logic: Each team member developed the logic necessary for their respective modules to function independently, improving modularity.
+- Branching Strategy: Each team member worked on their module in a separate branch to avoid conflicts and facilitate independent testing. Merging into the main branch was done once each feature was completed and reviewed.
+
+#### Lessons Learned:
+
+- From now onwards we have decided to use separate branches for each feature and merging after all the conflicts have been resolved.
+- While H2 is ideal for development and testing due to its speed and simplicity, we plan to transition to a more robust database for production deployment to ensure better data persistence and scalability.
 
 Final Submission: Complete and polished LMS with all features implemented, tested, and documented.
 
 Development Tools and Standards
 1. IDE: IntelliJ or VS Code.
 2. Coding Standards: Follow the Google Java Style Guide.
-3. Version Control: Weekly code merges to resolve conflicts and sync changes.Dhairya4256
+3. Version Control: Weekly code merges to resolve conflicts and sync changes.
 
 Team Members & Responsibilities
 

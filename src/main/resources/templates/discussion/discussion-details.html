@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout/layout :: content">
+<head>
+  <title>Discussion Details</title>
+</head>
+<body>
+<div class="container">
+  <h1 th:text="${discussion.content}">Discussion Title</h1>
+  <p th:text="${discussion.createdAt}">Created At</p>
+  <hr/>
+
+  <h2>Comments</h2>
+  <div th:each="comment : ${comments}" class="mb-3">
+    <p><strong th:text="${comment.createdBy}">User</strong>: <span th:text="${comment.content}">Comment Content</span></p>
+    <p><small th:text="${comment.createdAt}">Date</small></p>
+  </div>
+
+  <h3>Add a Comment</h3>
+  <form th:action="@{/templates/comment/add}" th:object="${commentForm}" method="post">
+    <input type="hidden" th:field="*{discussionId}" th:value="${discussion.id}"/>
+    <div class="mb-3">
+      <label for="content">Comment</label>
+      <textarea th:field="*{content}" class="form-control" id="content" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Comment</button>
+  </form>
+</div>
+</body>
+</html>
