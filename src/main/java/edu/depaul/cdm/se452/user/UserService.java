@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public boolean login(String username, String password) {
-        Optional<User> userOptional = userRepository.findUserByUsername(username);
+        Optional<User> userOptional = userRepository.findUserByUserName(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return password.equals(user.getPassword());
