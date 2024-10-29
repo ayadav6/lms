@@ -1,7 +1,7 @@
 /*
  * @author : Ashish Yadav
  * 
- * Milestone 2:
+ * Milestone 3:
  * File: user:
  * 1. Entity Class:
  *    - Created `User` entity with fields like `userName`, `password`, `role`, `email`, and `createdAt`.
@@ -17,6 +17,15 @@
  * 4. Interaction with Other Modules:
  *    - Interacts with the `Course Management` module to manage courses assigned to users.
  *    - Connects with the `Enrollment Management` module to track user enrollments in courses.
+ *
+ * 5. Implemented Service Layer
+ *    -Created service class for User
+ *    -Added login method for sign in. Will add hashed based credentials for login in the final submission
+ *
+ * 6.Implemented Controller class
+ *    -Added api's for getAllUsers,getUserById,createUser,deleteUser,getStudentsByCourseId,loginUser
+ *
+ * 7.Rebased all the diverged branches and helped in solving conflicts to teammates.
  *
  */
 
