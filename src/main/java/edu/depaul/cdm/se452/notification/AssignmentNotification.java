@@ -1,22 +1,21 @@
 package edu.depaul.cdm.se452.notification;
-import java.sql.Timestamp;
 
+import java.sql.Timestamp;
 import edu.depaul.cdm.se452.assessment.Assignment;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "AssignmentNotification")
-@PrimaryKeyJoinColumn(name = "notification_id")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AssignmentNotification extends BaseNotification {
+@DiscriminatorValue("assignment")
+public class AssignmentNotification extends Notification {
 
     @ManyToOne
     @JoinColumn(name = "assignment_id", nullable = false)
-    private Assignment assignment; // Reference to the Assignment entity
+    private Assignment assignment;
 
     @Column(name = "deadline")
-    private Timestamp deadline; // Deadline for the assignment (if applicable)
+    private Timestamp deadline;
 }

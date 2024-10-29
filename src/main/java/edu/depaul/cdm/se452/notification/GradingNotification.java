@@ -1,25 +1,25 @@
 package edu.depaul.cdm.se452.notification;
+
 import edu.depaul.cdm.se452.assessment.Assignment;
 import edu.depaul.cdm.se452.assessment.Grade;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "GradingNotification")
-@PrimaryKeyJoinColumn(name = "notification_id")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GradingNotification extends BaseNotification {
+@DiscriminatorValue("grade")
+public class GradingNotification extends Notification {
 
     @ManyToOne
     @JoinColumn(name = "assignment_id", nullable = false)
-    private Assignment assignment; // Reference to the Assignment entity
+    private Assignment assignment;
 
     @ManyToOne
     @JoinColumn(name = "grade_id", nullable = false)
-    private Grade grade; // Reference to the Grade entity
+    private Grade grade;
 
     @Column(name = "feedback")
-    private String feedback; // Feedback given by the instructor
+    private String feedback;
 }
