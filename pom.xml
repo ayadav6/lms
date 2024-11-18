@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>edu.depaul.cdm.se452</groupId>
 	<artifactId>lms</artifactId>
-	<version>0.3</version> <!-- Updated version -->
+	<version>0.4</version> <!-- Updated version -->
 	<name>lms</name>
 	<description>Learning management system</description>
 	<url/>
