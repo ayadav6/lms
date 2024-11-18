@@ -10,7 +10,7 @@
 
     <div class="list-group">
         <div th:each="discussion : ${discussions}">
-            <a th:href="@{/discussion/{id}(id=${discussion.id})}" class="list-group-item list-group-item-action">
+            <a th:href="@{/discussion/{id}(id=${discussion.id.toString()})}" class="list-group-item list-group-item-action">
                 <h5 th:text="${discussion.content}">Discussion Title</h5>
                 <p th:text="${discussion.createdAt}">Date Created</p>
             </a>

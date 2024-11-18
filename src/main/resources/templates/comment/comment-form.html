@@ -6,17 +6,12 @@
 <body>
 <div class="container">
   <h1>Add a Comment</h1>
-  <form th:action="@{/templates/comment/add}" th:object="${commentForm}" method="post">
-    <!-- Hidden field for the discussion ID -->
+  <form th:action="@{/api/comments/add}" th:object="${commentForm}" method="post">
     <input type="hidden" th:field="*{discussionId}" th:value="${discussionId}"/>
-
-    <!-- Comment content input -->
     <div class="mb-3">
       <label for="content" class="form-label">Comment</label>
       <textarea th:field="*{content}" class="form-control" id="content" rows="4" required></textarea>
     </div>
-
-    <!-- Submit button -->
     <button type="submit" class="btn btn-primary">Submit Comment</button>
   </form>
 </div>

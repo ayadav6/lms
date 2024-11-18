@@ -108,7 +108,75 @@ The project uses an H2 database for the following reasons:
 - From now onwards we have decided to use separate branches for each feature and merging after all the conflicts have been resolved.
 - While H2 is ideal for development and testing due to its speed and simplicity, we plan to transition to a more robust database for production deployment to ensure better data persistence and scalability.
 
-Final Submission: Complete and polished LMS with all features implemented, tested, and documented.
+### Final Submission: 
+
+**Scope:**  
+Complete all features, including frontend and backend logic, and ensure proper database integration.
+
+---
+
+**Deliverables:**
+
+- Each team member completed the following for their assigned module:
+   - **Service Layer** (handles business logic)
+   - **Controller Layer** (handles API endpoints and web interactions)
+   - **DTO (Data Transfer Object)** (manages clean data transfer)
+   - **Unit Tests** (ensures features work correctly)
+
+- Modules covered:
+   - **User Management**
+   - **Course Management**
+   - **Assessment and Grading**
+   - **Discussion Forum**
+   - **Notification System**
+
+- We configured two databases:
+   - **H2** for SQL-based features
+   - **MongoDB** for NoSQL-based features
+
+---
+
+**Modules and Features Completed:**
+
+Every module is now fully functional with:
+1. **Service Layer** for business logic
+2. **Controller Layer** for connecting backend to the frontend
+3. **DTOs** to ensure clean and organized data flow
+4. **Unit Testing** to confirm everything works as expected
+
+---
+
+**Database Configuration:**
+
+- **H2 Database (SQL):**
+   - Lightweight and easy to set up, perfect for testing and development.
+   - Runs in-memory, making tests faster.
+   - Automatically creates tables for relational data like users, courses, and notifications.
+
+- **MongoDB (NoSQL):**
+   - Great for handling unstructured data like discussions and comments.
+   - Provides flexibility and high performance for specific modules.
+
+---
+
+**Decisions Made:**
+
+- Each module was developed separately by team members to ensure smooth testing and reduce conflicts.
+- We used a hybrid database system:
+   - **H2** for structured data like user and course management.
+   - **MongoDB** for dynamic data like discussions and comments.
+
+---
+
+**Lessons Learned:**
+
+- Using separate branches for each feature made development easier and minimized conflicts.
+- H2 works well for testing and development but is not ideal for production. We plan to move to a more reliable database for production, like PostgreSQL.
+- Adding MongoDB alongside H2 was useful but required extra care in setting up and configuring.
+
+---
+
+This final submission is a complete and functional LMS with all planned features implemented, thoroughly tested, and documented.
 
 Development Tools and Standards
 

@@ -18,43 +18,55 @@ public class DiscussionController {
     @Autowired
     private CourseService courseService;
 
+    private boolean useMongo = false;
 
     @GetMapping
     public String listDiscussions(Model model) {
-        List<Discussion> discussions = discussionService.getAllDiscussions();
-        model.addAttribute("discussions", discussions);
+        if (useMongo) {
+            List<DiscussionMongo> discussions = discussionService.getAllDiscussionsMongo();
+            model.addAttribute("discussions", discussions);
+        } else {
+            List<DiscussionJpa> discussions = discussionService.getAllDiscussionsJpa();
+            model.addAttribute("discussions", discussions);
+        }
         return "discussion/discussions";
     }
 
-
     @GetMapping("/{id}")
-    public String viewDiscussion(@PathVariable Long id, Model model) {
-        Discussion discussion = discussionService.getDiscussionById(id);
-        if (discussion == null) {
-            return "redirect:/discussion";
+    public String viewDiscussion(@PathVariable String id, Model model) {
+        if (useMongo) {
+            DiscussionMongo discussion = discussionService.getDiscussionMongoById(id);
+            model.addAttribute("discussion", discussion);
+        } else {
+            DiscussionJpa discussion = discussionService.getDiscussionJpaById(Long.parseLong(id));
+            model.addAttribute("discussion", discussion);
+            model.addAttribute("comments", discussion.getComments());
         }
-
-        List<Comment> comments = discussion.getComments();
-        model.addAttribute("discussion", discussion);
-        model.addAttribute("comments", comments);
         return "discussion/discussion-details";
     }
-
 
     @GetMapping("/new")
     public String newDiscussionForm(Model model) {
         model.addAttribute("discussionForm", new DiscussionDTO());
         model.addAttribute("courses", courseService.getAllCourses());
-        model.addAttribute("title", "New Discussion");
-
         return "discussion/discussion-form";
     }
 
-
-
     @PostMapping("/create")
     public String createDiscussion(@ModelAttribute("discussionForm") DiscussionDTO discussionForm) {
-        discussionService.createDiscussion(discussionForm.getContent(), discussionForm.getCreatedByUserId(), discussionForm.getCourseId());
-        return "redirect:/discussion";
+        if (useMongo) {
+            discussionService.createDiscussionMongo(
+                    discussionForm.getContent(),
+                    discussionForm.getCreatedByUserId(),
+                    discussionForm.getCourseId()
+            );
+        } else {
+            discussionService.createDiscussionJpa(
+                    discussionForm.getContent(),
+                    discussionForm.getCreatedByUserId(),
+                    discussionForm.getCourseId()
+            );
+        }
+        return "redirect:/discussions";
     }
 }

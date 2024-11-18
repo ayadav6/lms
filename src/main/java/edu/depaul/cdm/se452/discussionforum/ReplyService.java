@@ -11,33 +11,43 @@ import java.util.List;
 public class ReplyService {
 
     @Autowired
-    private ReplyRepository replyRepository;
+    private ReplyJpaRepository replyJpaRepository;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private ReplyMongoRepository replyMongoRepository;
+
+    @Autowired
+    private CommentJpaRepository commentRepository;
 
     @Autowired
     private UserRepository userRepository;
 
-    public Reply addReply(String content, Long createdByUserId, Long commentId) {
+    private final boolean useMongoDb = true; // Flag to switch between databases
 
+    public ReplyJpa addReply(String content, Long createdByUserId, Long commentId) {
+        // Find the User who created the reply
         User createdBy = userRepository.findById(createdByUserId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + createdByUserId));
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+        // Find the Comment associated with the reply
+        CommentJpa comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("Comment not found"));
 
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalArgumentException("Comment not found with id: " + commentId));
+        // Create and save the new Reply
+        ReplyJpa reply = new ReplyJpa(content, createdBy, comment);
 
-
-        Reply reply = new Reply();
-        reply.setContent(content);
-        reply.setCreatedBy(createdBy);
-        reply.setComment(comment);
-
-        return replyRepository.save(reply);
+        if (useMongoDb) {
+            return replyMongoRepository.save(reply);
+        } else {
+            return replyJpaRepository.save(reply);
+        }
     }
 
-    public List<Reply> getRepliesByCommentId(Long commentId) {
-        return replyRepository.findByCommentId(commentId);
+    public List<ReplyJpa> getRepliesByCommentId(Long commentId) {
+        if (useMongoDb) {
+            return replyMongoRepository.findByComment_Id(commentId);
+        } else {
+            return replyJpaRepository.findByComment_Id(commentId);
+        }
     }
 }
