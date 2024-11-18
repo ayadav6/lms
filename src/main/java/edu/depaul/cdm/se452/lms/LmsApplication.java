@@ -23,7 +23,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 })
 @EnableMongoRepositories(basePackages = {
 		"edu.depaul.cdm.se452.course",
-		"edu.depaul.cdm.se452.discussionforum", "edu.depaul.cdm.se452.notification"
+		"edu.depaul.cdm.se452.discussionforum", "edu.depaul.cdm.se452.notification","edu.depaul.cdm.se452.assessment"
 })
 public class LmsApplication {
 	public static void main(String[] args) {

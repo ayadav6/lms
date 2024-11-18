@@ -1,4 +1,4 @@
-package edu.depaul.cdm.se452.notification;
+package edu.depaul.cdm.se452.lms;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,6 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+
+import edu.depaul.cdm.se452.notification.*;
 
 import static org.mockito.Mockito.*;
 
