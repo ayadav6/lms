@@ -16,9 +16,19 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    // Save or update a course
+    @Autowired
+    private CourseMongoService courseMongoService; // Inject Mongo service to integrate MongoDB data
+
     public Course saveCourse(@NotNull @Valid Course course) {
         log.debug("Saving course: {}", course);
+
+        // Validate dates (if applicable)
+        if (course.getStartDate() != null && course.getEndDate() != null &&
+                course.getEndDate().isBefore(course.getStartDate())) {
+            throw new IllegalArgumentException("End date cannot be before start date");
+        }
+
+        // Save and return the course
         return courseRepository.save(course);
     }
 
@@ -34,6 +44,25 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
+    // Retrieve course by ID and merge data from SQL and MongoDB
+    public CourseWithMongoData getCourseWithMongoData(Long id) {
+        // Fetch the course from SQL (H2)
+        Optional<Course> course = courseRepository.findById(id);
+        if (course.isPresent()) {
+            // Fetch the MongoDB course data (description and materials)
+            Optional<CourseMongo> courseMongo = courseMongoService.getCourseById(id.toString());
+
+            // Create a new object to hold both SQL and MongoDB data
+            CourseWithMongoData courseWithMongoData = new CourseWithMongoData();
+            courseWithMongoData.setCourse(course.get());
+            courseWithMongoData.setDescription(courseMongo.map(CourseMongo::getDescription).orElse(null));
+            courseWithMongoData.setMaterials(courseMongo.map(CourseMongo::getMaterials).orElse(null));
+
+            return courseWithMongoData;
+        }
+        return null; // Course not found
+    }
+
     // Delete a course
     public void deleteCourse(Long id) {
         log.debug("Deleting course by ID: {}", id);
@@ -47,6 +76,7 @@ public class CourseService {
         }
     }
 
+    // Update an existing course
     public Course updateCourse(Long id, Course updatedCourseDetails) {
         // Retrieve the existing course from the database
         Course course = courseRepository.findById(id)
