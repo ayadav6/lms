@@ -3,7 +3,7 @@ package edu.depaul.cdm.se452.notification;
 import edu.depaul.cdm.se452.assessment.Assignment;
 import edu.depaul.cdm.se452.assessment.Grade;
 import edu.depaul.cdm.se452.course.Course;
-import edu.depaul.cdm.se452.course.CourseRepository;  
+import edu.depaul.cdm.se452.course.CourseRepository;
 import edu.depaul.cdm.se452.user.User;
 import edu.depaul.cdm.se452.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,63 +15,65 @@ import java.util.ArrayList;
 
 
 @Service
-public class NotificationServiceImpl implements NotificationService{
-
-    @Autowired
-    private AssignmentNotificationRepository assignmentNotificationRepository;
-
-    @Autowired
-    private GradingNotificationRepository gradingNotificationRepository;
-
+public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private NotificationNoSQLRepository notificationNoSQLRepository;
+
+    @Autowired
+    private NotificationWebSocketController webSocketController;
+
     @Override
-    public void sendAssignmentNotification(Assignment assignment, Long courseId){
-        // List<User> users = userRepository.getStudentByCourseId(courseId); // Fetch users in the course
-        List<User> users = new ArrayList<>(); // No users will be notified
+    public void sendAssignmentNotification(Assignment assignment, Long courseId) {
+        List<User> users = userRepository.findStudentsByCourseId(courseId);
 
-        if (users == null || users.isEmpty()) {
-            System.out.println("No students found for course ID: " + courseId);
-            return;
-        }
-
-
-        for (User user : users){
-            AssignmentNotification notification = new AssignmentNotification();
-            notification.setUser(user); // Set the user being notified
+        for (User user : users) {
+            // Save notification in MongoDB
+            NotificationDocument notification = new NotificationDocument();
+            notification.setNotificationType("assignment");
+            notification.setUserId(String.valueOf(user.getId())); // Use String.valueOf
             notification.setMessage("New Assignment Posted: " + assignment.getTitle());
-            notification.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-            notification.setIsRead(false); // Mark as unread
-            
+            notification.setAssignmentId(String.valueOf(assignment.getId())); // Use String.valueOf
+            notification.setCreatedDate(System.currentTimeMillis());
+            notification.setRead(false);
+            notificationNoSQLRepository.save(notification);
 
-            // Set the assignment and its deadline
-            notification.setAssignment(assignment);
-            notification.setDeadline(assignment.getDueDate()); // Assuming dueDate is the deadline
-        
-            // Save the notification
-            assignmentNotificationRepository.save(notification);
-
+            // Send WebSocket notification
+            webSocketController.sendNotification(String.valueOf(user.getId()),
+                    "New Assignment Posted: " + assignment.getTitle());
         }
+
+
+
     }
 
     @Override
     public void sendGradeNotification(Grade grade) {
-        // Assuming each Grade object has a Submission that can get the student
-        User student = grade.getSubmission().getStudent(); // Get the student user from submission
+        User student = grade.getSubmission().getStudent();
 
-        GradingNotification gradingNotification = new GradingNotification();
-        gradingNotification.setUser(student); // Set the user being notified
-        gradingNotification.setMessage("Grade Posted for Assignment: " + grade.getSubmission().getAssignment().getTitle());
-        gradingNotification.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-        gradingNotification.setIsRead(false); // Mark as unread
+        // Save notification in MongoDB
+        NotificationDocument notification = new NotificationDocument();
+        notification.setNotificationType("grading");
+        notification.setUserId(String.valueOf(student.getId())); // Use String.valueOf
+        notification.setMessage("Grade Updated for: " + grade.getSubmission().getAssignment().getTitle());
+        notification.setGradeId(String.valueOf(grade.getId())); // Use String.valueOf
+        notification.setCreatedDate(System.currentTimeMillis());
+        notification.setRead(false);
+        notificationNoSQLRepository.save(notification);
 
-        // Set the grade and feedback
-        gradingNotification.setGrade(grade);
-        gradingNotification.setFeedback(grade.getFeedback()); // Assuming feedback is provided by the instructor
-
-        // Save the grading notification
-        gradingNotificationRepository.save(gradingNotification);
+        // Send WebSocket notification
+        webSocketController.sendNotification(String.valueOf(student.getId()),
+                "Your Grade for " + grade.getSubmission().getAssignment().getTitle() + " has been updated.");
+  
     }
+    
+    @Override
+    public List<NotificationDocument> getAllNotificationsForUser(Long userId) {
+        return notificationNoSQLRepository.findByUserId(String.valueOf(userId));
+    }
+
+
 }
