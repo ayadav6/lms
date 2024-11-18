@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>User Notifications</title>
+    </head>
+    <body>
+        <h1>User Notifications</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Notification Type</th>
+                    <th>Message</th>
+                    <th>Created Date</th>
+                    <th>Read</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="notification : ${notifications}">
+                    <td th:text="${notification.notificationType}">Notification
+                        Type</td>
+                    <td th:text="${notification.message}">Message</td>
+                    <td
+                        th:text="${#dates.format(notification.createdDate, 'yyyy-MM-dd HH:mm:ss')}">Created
+                        Date</td>
+                    <td th:text="${notification.read ? 'Yes' : 'No'}">Read</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
