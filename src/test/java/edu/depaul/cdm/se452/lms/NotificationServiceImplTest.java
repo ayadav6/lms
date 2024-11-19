@@ -1,9 +1,10 @@
-package edu.depaul.cdm.se452.notification;
+package edu.depaul.cdm.se452.lms;
 
 import edu.depaul.cdm.se452.user.UserRepository;
 import edu.depaul.cdm.se452.assessment.Assignment;
 import edu.depaul.cdm.se452.assessment.Grade;
 import edu.depaul.cdm.se452.assessment.Submission;
+import edu.depaul.cdm.se452.notification.*;
 import edu.depaul.cdm.se452.user.User;
 
 import org.junit.jupiter.api.BeforeEach;

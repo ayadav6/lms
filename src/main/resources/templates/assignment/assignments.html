@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assignments</title>
+</head>
+<body>
+    <h1>Assignments List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>CourseName</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Due Date</th>
+                <th>File</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="assignment : ${assignments}">
+                <!-- <td th:text="${assignment.title}">Assignment Title</td> -->
+                <td th:text="${assignment.getCourse().getName()}">Course Name</td>
+                
+            <td>    
+                <a th:href="@{/student-reviews/new/{id}(id=${assignment.id})}" th:text="${assignment.title}">Assignment Title</a>
+            </td>
+                <td th:text="${assignment.description}">Assignment Description</td>
+                <td th:text="${#dates.format(assignment.dueDate, 'yyyy-MM-dd')}">Due Date</td>
+                <td>
+                    <a th:href="@{/api/assignments/{id}(id=${assignment.id})}" th:text="${assignment.fileName}">Download</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

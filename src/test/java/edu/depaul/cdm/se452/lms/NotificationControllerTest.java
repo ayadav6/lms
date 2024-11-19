@@ -1,7 +1,8 @@
-package edu.depaul.cdm.se452.notification;
+package edu.depaul.cdm.se452.lms;
 
 import edu.depaul.cdm.se452.assessment.Assignment;
 import edu.depaul.cdm.se452.assessment.Grade;
+import edu.depaul.cdm.se452.notification.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

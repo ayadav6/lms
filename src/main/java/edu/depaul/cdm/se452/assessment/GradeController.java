@@ -19,6 +19,7 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
 
+    //Post grade for an assignment
     @PostMapping
     @Operation(summary = "Create a new grade ")
     public ResponseEntity<GradeDTO> createGrade(@RequestBody GradeDTO gradeDTO) {
@@ -29,6 +30,7 @@ public class GradeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdGrade);
     }
 
+    //Get grades by id
     @GetMapping("/{id}")
     @Operation(summary = "Get a grade by ID ")
     public ResponseEntity<GradeDTO> getGrade(@PathVariable Long id) {
@@ -39,6 +41,7 @@ public class GradeController {
         return ResponseEntity.ok(gradeDTO);
     }
 
+    //Fetch all the grades
     @GetMapping
     @Operation(summary = "Get all grades")
     public ResponseEntity<List<GradeDTO>> getAllGrades() {
@@ -49,6 +52,7 @@ public class GradeController {
         return ResponseEntity.ok(grades);
     }
 
+    //Update an existing grade 
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing grade ")
     public ResponseEntity<GradeDTO> updateGrade(@PathVariable Long id, @RequestBody GradeDTO gradeDTO) {
@@ -59,6 +63,13 @@ public class GradeController {
         return ResponseEntity.ok(updatedGrade);
     }
 
+    // Get grades by submission ID
+    @GetMapping("/submission/{submissionId}")
+    public ResponseEntity<List<GradeDTO>> getGradesBySubmissionId(@PathVariable Long submissionId) {
+        return ResponseEntity.ok(gradeService.getGradesBySubmissionId(submissionId));
+    }
+    
+    //Delete a grade
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a particular grade")
     public ResponseEntity<Void> deleteGrade(@PathVariable Long id) {

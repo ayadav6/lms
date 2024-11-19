@@ -45,18 +45,28 @@ public class GradeService {
         return convertToDTO(savedGrade);
     }
 
+    //Fetch grade by id
     public GradeDTO getGradeById(Long id) {
         Grade grade = gradeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grade not found"));
         return convertToDTO(grade);
     }
 
+        // Get grades by submission ID
+        public List<GradeDTO> getGradesBySubmissionId(Long submissionId) {
+            return gradeRepository.findBySubmissionId(submissionId).stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+        }
+    
+    //Fetch all the grades
     public List<GradeDTO> getAllGrades() {
         return gradeRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
+    //Update a grade
     public GradeDTO updateGrade(Long id, GradeDTO gradeDTO) {
         Grade existingGrade = gradeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Grade not found"));
@@ -78,6 +88,7 @@ public class GradeService {
         return convertToDTO(updatedGrade);
     }
 
+    //Delete grade
     public void deleteGrade(Long id) {
         Grade grade = gradeRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Grade not found"));

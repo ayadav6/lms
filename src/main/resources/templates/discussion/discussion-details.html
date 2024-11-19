@@ -16,8 +16,8 @@
   </div>
 
   <h3>Add a Comment</h3>
-  <form th:action="@{/templates/comment/add}" th:object="${commentForm}" method="post">
-    <input type="hidden" th:field="*{discussionId}" th:value="${discussion.id}"/>
+  <form th:action="@{/api/comments/add}" th:object="${commentForm}" method="post">
+    <input type="hidden" th:field="*{discussionId}" th:value="${discussion.id.toString()}"/>
     <div class="mb-3">
       <label for="content">Comment</label>
       <textarea th:field="*{content}" class="form-control" id="content" rows="3" required></textarea>

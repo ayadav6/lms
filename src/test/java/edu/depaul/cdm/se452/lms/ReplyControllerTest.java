@@ -1,7 +1,7 @@
 package edu.depaul.cdm.se452.lms;
 
 
-import edu.depaul.cdm.se452.discussionforum.Reply;
+import edu.depaul.cdm.se452.discussionforum.ReplyJpa;
 import edu.depaul.cdm.se452.discussionforum.ReplyController;
 import edu.depaul.cdm.se452.discussionforum.ReplyDTO;
 import edu.depaul.cdm.se452.discussionforum.ReplyService;
@@ -51,8 +51,8 @@ class ReplyControllerTest {
 
     @Test
     void testGetRepliesByCommentId() {
-        List<Reply> replies = new ArrayList<>();
-        replies.add(new Reply());
+        List<ReplyJpa> replies = new ArrayList<>();
+        replies.add(new ReplyJpa());
         when(replyService.getRepliesByCommentId(1L)).thenReturn(replies);
 
         String viewName = replyController.getRepliesByCommentId(1L, model);

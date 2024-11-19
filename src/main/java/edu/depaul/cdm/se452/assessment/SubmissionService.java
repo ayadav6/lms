@@ -11,9 +11,7 @@ import edu.depaul.cdm.se452.user.User;
 import edu.depaul.cdm.se452.user.UserRepository;
 import java.util.stream.Collectors;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.sql.Timestamp;
 
 @Service
@@ -22,8 +20,7 @@ public class SubmissionService {
     private final SubmissionRepository submissionRepository;
     private final UserRepository userRepository;
     private final AssignmentRepository assignmentRepository;
-    private final Path fileStorageLocation = Paths.get("submissions/uploads").toAbsolutePath().normalize();
-
+   
     @Autowired
     public SubmissionService(SubmissionRepository submissionRepository,
                              UserRepository userRepository,
@@ -32,13 +29,9 @@ public class SubmissionService {
         this.userRepository = userRepository;
         this.assignmentRepository = assignmentRepository;
 
-        try {
-            Files.createDirectories(fileStorageLocation);
-        } catch (IOException ex) {
-            throw new RuntimeException("Could not create the directory for file storage.", ex);
-        }
     }
 
+    //Creates a submission
     public SubmissionDTO createSubmissionWithFile(SubmissionDTO submissionDTO, MultipartFile file) {
         
         
@@ -64,18 +57,17 @@ public class SubmissionService {
         return convertToDTO(savedSubmission);
     }
 
+    //Fetch submission with studentId and AssignmentId
     public SubmissionDTO getSubmissionByStudentAndAssignment(Long studentId, Long assignmentId) {
-       
-        Submission submission = submissionRepository.findAll()
-            .stream()
-            .filter(s -> s.getStudent().getId()==(studentId) && s.getAssignment().getId()==(assignmentId))
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("Submission not found for student ID " + studentId + " and assignment ID " + assignmentId));
+       Submission submission = submissionRepository.findByStudentIdAndAssignmentId(studentId, assignmentId)
+        .stream()
+        .findFirst()
+        .orElseThrow(() -> new RuntimeException("Submission not found for student ID " + studentId + " and assignment ID " + assignmentId));
     
         return convertToDTO(submission);
        
     }
-
+    //Delete submission
     public void deleteSubmission(Long id) {
         if (!submissionRepository.existsById(id)) {
             throw new RuntimeException("Submission not found with ID " + id);
@@ -83,11 +75,13 @@ public class SubmissionService {
           submissionRepository.deleteById(id);
     }
 
+    //Fetch submission
     public Submission getSubmissionById(Long id) {
         return submissionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Submission not found"));
     }
 
+    //Upload submission
     public Resource loadFileAsResource(Long id) {
         Submission submission = submissionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Submission not found"));
@@ -95,16 +89,15 @@ public class SubmissionService {
         Resource resource = new ByteArrayResource(submission.getFileData());
         return resource;
     }
+
+    //Fetch all submissions for assignment
     public List<SubmissionDTO> getAllSubmissionsByAssignmentId(Long assignmentId) {
-        
-        List<SubmissionDTO> submissions = submissionRepository.findAll()
-            .stream()
-            .filter(s -> s.getAssignment().getId() == assignmentId) // Use == for primitive long comparison
-            .map(this::convertToDTO)
-            .collect(Collectors.toList());
+      List<Submission> submissions = submissionRepository.findByAssignmentId(assignmentId);
 
-
-        return submissions;
+        // Convert to DTO and return
+        return submissions.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     private SubmissionDTO convertToDTO(Submission submission) {

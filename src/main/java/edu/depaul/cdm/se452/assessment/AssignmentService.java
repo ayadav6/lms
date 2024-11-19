@@ -25,6 +25,7 @@ public class AssignmentService {
         return assignments;
     }
 
+    //Get Assignment by its id
     public Optional<Assignment> getAssignmentById(Long id) {
         log.traceEntry("Getting assignment with id: {}", id);
         Optional<Assignment> assignment = assignmentRepository.findById(id);
@@ -36,7 +37,7 @@ public class AssignmentService {
             return assignment;
     }
 
-
+    //Creates a new assignment
     public Assignment createAssignment(Assignment assignment) {
         log.traceEntry("Creating a new assignment: {}", assignment);
     
@@ -54,6 +55,7 @@ public class AssignmentService {
     
         Assignment savedAssignment = assignmentRepository.save(assignment);
         log.traceExit("Assignment created: {}", savedAssignment);
+        
         return savedAssignment;
     }
 
@@ -86,19 +88,38 @@ public class AssignmentService {
                 }).orElseThrow(() -> new RuntimeException("Assignment not found with id " + id));
     }
 
-    public List<AssignmentDTO> getAssignmentsByCourseName(String courseName) {
-        return assignmentRepository.findAll()
-                .stream()
-                .filter(assignment -> courseName.equalsIgnoreCase(assignment.getCourse().getName())) // assuming course has a getName method
+  
+
+      // Fetch assignments by course name
+      public List<AssignmentDTO> getAssignmentsByCourseName(String courseName) {
+        List<Assignment> assignments = assignmentRepository.findAssignmentsByCourseName(courseName);
+        return assignments.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    
+     // Fetch assignments by course ID
+     public List<AssignmentDTO> getAssignmentsByCourseId(Long courseId) {
+        List<Assignment> assignments = assignmentRepository.findByCourse_CourseId(courseId);
+        return assignments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Search assignments by title
+    public List<AssignmentDTO> searchAssignmentsByTitle(String keyword) {
+        List<Assignment> assignments = assignmentRepository.findByTitleContainingIgnoreCase(keyword);
+        return assignments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
             
     // Delete an assignment by id
     public void deleteAssignment(Long id) {
         log.traceEntry("Deleting assignment with id: {}", id);
+        if (!assignmentRepository.existsById(id)) {
+            throw new IllegalArgumentException("Assignment not found with ID: " + id);
+        }
         assignmentRepository.deleteById(id);
         log.traceExit("Assignment with id: {} deleted", id);
     } 
@@ -117,4 +138,3 @@ public class AssignmentService {
         return dto;
     }
 }
-

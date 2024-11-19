@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<!-- <html lang="en"> -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Student Review</title>
+</head>
+<body>
+    <h1>Submit Student Review for Assignment</h1>
+
+    <!-- Form to submit review -->
+    <form action="/student-reviews/submit" method="POST" enctype="multipart/form-data">
+        <!-- Hidden field for Assignment ID -->
+        <input type="hidden" name="assignmentId" th:value="${assignmentId}">
+
+        <!-- Student ID -->
+        <label for="studentId">Student ID:</label>
+        <input type="text" id="studentId" name="studentId" required>
+        <br>
+
+        <!-- Comment -->
+        <label for="reviewText">Comment:</label>
+        <textarea id="comment" name="reviewText" rows="4" cols="50" required></textarea>
+        <br>
+
+        <!-- Rating -->
+        <label for="rating">Rating (1-5):</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" required>
+        <br>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <br>
+
+    <!-- Link back to the assignment page (optional) -->
+    <a th:href="@{/api/assignments/view}">Back to Assignments</a>
+
+</body>
+</html>

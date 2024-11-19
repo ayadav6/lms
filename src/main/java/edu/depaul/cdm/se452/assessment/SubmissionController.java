@@ -28,6 +28,7 @@ public class SubmissionController {
     @Autowired
     private SubmissionService submissionService;
 
+    //Upload submissions
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "Submit an Assignment")
     public ResponseEntity<SubmissionDTO> createSubmission(
@@ -50,6 +51,7 @@ public class SubmissionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedSubmission);
     }
 
+    //Fetch submissions for an assignment
     @GetMapping("/assignment/{assignmentId}")
     @Operation(summary = "Get All Submissions for an Assignment")
     public ResponseEntity<List<SubmissionDTO>> getSubmissionsByAssignmentId(@PathVariable Long assignmentId) {
@@ -60,7 +62,7 @@ public class SubmissionController {
         return ResponseEntity.ok(submissions);
     }
    
-    
+    //Get submission for a particular studentID and assignment
     @GetMapping("/{studentId}/{assignmentId}")
     @Operation(summary = "Get Submission Details of particular Student and assignment")
     public ResponseEntity<SubmissionDTO> getSubmissionWithFileDownloadLink(
@@ -81,7 +83,8 @@ public class SubmissionController {
         
         return ResponseEntity.ok(submissionDTO);
     }
-  
+    
+    //Download submission
     @GetMapping("/download/{id}")
     @Operation(summary = "Download the submission File")
     public ResponseEntity<Resource> downloadSubmissionFile(@PathVariable Long id) {
@@ -99,6 +102,7 @@ public class SubmissionController {
        .body(resource);
     }
 
+    //Delete submission
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a Submission")
     public ResponseEntity<Void> deleteSubmission(@PathVariable Long id) {
