@@ -1,7 +1,7 @@
 /*
  * @author : Ashish Yadav
  * 
- * Milestone 3:
+ * Final project:
  * File: user:
  * 1. Entity Class:
  *    - Created `User` entity with fields like `userName`, `password`, `role`, `email`, and `createdAt`.
@@ -26,6 +26,16 @@
  *    -Added api's for getAllUsers,getUserById,createUser,deleteUser,getStudentsByCourseId,loginUser
  *
  * 7.Rebased all the diverged branches and helped in solving conflicts to teammates.
+ *
+ * 8.Solved cyclic dependency between user and course module.
+ *
+ * 9. Created UI for crud operations page,signup,login,home page.
+ *
+ * 10.Created a login functionality using validation thought in class.
+ *
+ * 11.Helped teammates with their issues while merging and designing their feature.
+ *
+ * 12.Implemented test class for User module.
  *
  */
 
