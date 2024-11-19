@@ -43,7 +43,7 @@
  *    - Implemented REST API.
  *
  * 8. Project Updates:
- *    - Updated the project version to `0.3`.
+ *    - Updated the project version to `1.0`.
  *    - Improved code structure and organization for readability and maintainability.
  *    - Enhanced documentation and inline comments for future development and debugging.
  *
