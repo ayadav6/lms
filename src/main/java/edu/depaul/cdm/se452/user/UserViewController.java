@@ -82,18 +82,7 @@ public class UserViewController {
         model.addAttribute("user", user);
         return "user/userdetails";
     }
-//        @DeleteMapping("/{id}")
-//        public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-//            userService.deleteUser(id);
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
 
-    // Endpoint to get all students by course ID
-//        @GetMapping("/course/{courseId}")
-//        public ResponseEntity<List<User>> getStudentsByCourseId(@PathVariable Long courseId) {
-//            List<User> students = userService.getStudentsByCourseId(courseId);
-//            return new ResponseEntity<>(students, HttpStatus.OK);
-//        }
 
     @GetMapping("/course/{courseId}")
     public ResponseEntity<List<User>> getStudentsByCourseId(@PathVariable Long courseId) {
