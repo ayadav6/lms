@@ -29,7 +29,13 @@
  *
  * 8.Solved cyclic dependency between user and course module.
  *
- * 9. Created UI for crud operations page,signup,login,home page.
+ * 9. Created UI for crud operations page,signup,login,home page
+ * crud operations UI link: http://localhost:8081/api/users/listUsers
+ * login link:.http://localhost:8081/api/users/loginView
+ * signup: http://localhost:8081/api/users/signup
+ * home:http://localhost:8081/api/users/home
+ * user details: http://localhost:8081/api/users/details
+ * edit page:  http://localhost:8081/api/users/edit/{id}
  *
  * 10.Created a login functionality using validation thought in class.
  *
@@ -37,6 +43,11 @@
  *
  * 12.Implemented test class for User module.
  *
+ * 13.Created RestController for swagger and Controller for handling MVC architecture
+ *
+ * 14.Created docker file for our project.
+ *
+ * 15.Did git rebasing and pull request checks before merging to dev and main for all the commits.
  */
 
 
