@@ -1,79 +1,143 @@
 package edu.depaul.cdm.se452.lms;
 
-import edu.depaul.cdm.se452.course.Course;
-import edu.depaul.cdm.se452.user.User;
-import edu.depaul.cdm.se452.user.UserRepository;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
+import edu.depaul.cdm.se452.course.Course;
+import edu.depaul.cdm.se452.course.CourseRepository;
+import edu.depaul.cdm.se452.user.User;
+import edu.depaul.cdm.se452.user.UserRepository;
+import edu.depaul.cdm.se452.user.UserService;
 
-import static org.assertj.core.api.Assertions.assertThat;
+class UserTest {
 
-@DataJpaTest
-public class UserTest {
-
-    @Autowired
+    @Mock
     private UserRepository userRepository;
 
-    private User testUser;
+    @Mock
+    private CourseRepository courseRepository;
+
+    @InjectMocks
+    private UserService userService;
+
+    private User user;
+    private User updatedUserDetails;
+    private Course course;
 
     @BeforeEach
-    public void setUp() {
-        // Initialize the test user object before each test
-        testUser = new User();
-        testUser.setUserName("john_doe");
-        testUser.setPassword("password123");
-        testUser.setRole(User.Role.STUDENT);
-        testUser.setEmail("john.doe@example.com");
-        testUser.setCreatedAt(LocalDateTime.now());
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
 
-        // Save the user to the in-memory database
-        userRepository.save(testUser);
+        // Setting up a sample user
+        user = new User();
+       // user.setId(1L);
+        user.setUserName("testuser");
+        user.setEmail("testuser@example.com");
+        user.setPassword("password");
+        user.setRole(User.Role.STUDENT);
+
+        // Setting up updated user details
+        updatedUserDetails = new User();
+        updatedUserDetails.setUserName("updatedUser");
+        updatedUserDetails.setEmail("updateduser@example.com");
+        updatedUserDetails.setPassword("newpassword");
+        updatedUserDetails.setRole(User.Role.INSTRUCTOR);
+
+        // Setting up a sample course
+        course = new Course();
+        course.setCourseId(1L);
+        course.setName("Test Course");
+        course.setStatus(Course.Status.ACTIVE);
     }
 
     @Test
-    public void testCreateUser() {
-        // Assert that the user has been saved and has an ID
-        User savedUser = userRepository.findById(testUser.getId()).orElse(null);
-        assertThat(savedUser).isNotNull();
-        assertThat(savedUser.getUserName()).isEqualTo("john_doe");
+    void saveUser_ShouldReturnSavedUser() {
+        when(userRepository.save(user)).thenReturn(user);
+
+        User savedUser = userService.saveUser(user);
+
+        assertEquals(user.getUserName(), savedUser.getUserName());
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
-    public void testUserCourseAssociation() {
-        // Create a Course
-        Course course = new Course();
-        course.setName("Math 101");
-        course.setStartDate(LocalDateTime.now().toLocalDate());
-        course.setEndDate(LocalDateTime.now().plusMonths(3).toLocalDate());
-        course.setInstructor(testUser); // Linking to the user as instructor
+    void getAllUsers_ShouldReturnListOfUsers() {
+        when(userRepository.findAll()).thenReturn(Arrays.asList(user));
 
-        // Add the course to the user's course list
-        testUser.setCourseList(Collections.singletonList(course));
+        List<User> users = userService.getAllUsers();
 
-        // Save the user with the associated course
-        userRepository.save(testUser);
-
-        // Fetch the user and validate course association
-        User fetchedUser = userRepository.findById(testUser.getId()).orElse(null);
-        List<Course> courses = fetchedUser.getCourseList();
-        assertThat(courses).isNotEmpty();
-        assertThat(courses.get(0).getName()).isEqualTo("Math 101");
+        assertEquals(1, users.size());
+        assertEquals(user.getUserName(), users.get(0).getUserName());
+        verify(userRepository, times(1)).findAll();
     }
 
     @Test
-    public void testDeleteUser() {
-        // Delete the user from the repository
-        userRepository.delete(testUser);
+    void getUserById_ShouldReturnUser() {
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        // Ensure the user no longer exists
-        assertThat(userRepository.findById(testUser.getId()).isPresent()).isFalse();
+        Optional<User> foundUser = userService.getUserById(1L);
+
+        assertTrue(foundUser.isPresent());
+        assertEquals(user.getUserName(), foundUser.get().getUserName());
+        verify(userRepository, times(1)).findById(1L);
     }
 
+    @Test
+    void deleteUser_ShouldThrowException_WhenUserDoesNotExist() {
+        when(userRepository.existsById(1L)).thenReturn(false);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.deleteUser(1L);
+        });
+
+        assertEquals("User not found with ID: 1", exception.getMessage());
+    }
+
+
+
+    @Test
+    void updateUser_ShouldThrowException_WhenUserNotFound() {
+        updatedUserDetails.setId(1L); // Set the correct ID
+
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            userService.updateUser(updatedUserDetails);
+        });
+
+        assertEquals("User not found", exception.getMessage());
+        verify(userRepository, times(1)).findById(1L);
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    void login_ShouldReturnTrue_WhenCredentialsAreCorrect() {
+        when(userRepository.findUserByUserName("testuser")).thenReturn(Optional.of(user));
+
+        boolean loginSuccess = userService.login("testuser", "password");
+
+        assertTrue(loginSuccess);
+        verify(userRepository, times(1)).findUserByUserName("testuser");
+    }
+
+    @Test
+    void login_ShouldReturnFalse_WhenCredentialsAreIncorrect() {
+        when(userRepository.findUserByUserName("testuser")).thenReturn(Optional.of(user));
+
+        boolean loginSuccess = userService.login("testuser", "wrongpassword");
+
+        assertFalse(loginSuccess);
+        verify(userRepository, times(1)).findUserByUserName("testuser");
+    }
 }

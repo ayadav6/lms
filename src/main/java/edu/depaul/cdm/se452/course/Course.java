@@ -1,8 +1,11 @@
 package edu.depaul.cdm.se452.course;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
+import java.util.List;
 
 import edu.depaul.cdm.se452.user.User;
 
@@ -25,14 +28,19 @@ public class Course {
 
     // Many courses can be taught by one instructor
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instructor_id", nullable = false)
+    @JsonBackReference
+  //  @JoinColumn(name = "instructor_id", nullable = false)
     private User instructor;
+
+    @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
+    private List<User> users;
 
     // No-arg constructor for JPA
     public Course() {
     }
 
-    public Course(String name, LocalDate startDate, LocalDate endDate, Status status, User instructor) {
+    public Course(String name, LocalDate startDate, LocalDate endDate, Status status) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;

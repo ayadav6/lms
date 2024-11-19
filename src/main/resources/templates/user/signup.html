@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">Signup</h2>
+    <form id="signupForm">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="userName" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-control" id="role" name="role" required>
+                <option value="">Select a role</option>
+                <option value="STUDENT">Student</option>
+                <option value="INSTRUCTOR">Instructor</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Courses</label><br>
+            <div th:each="course : ${courses}">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" th:id="'course_' + ${course.courseId}" th:value="${course.courseId}" name="courseIds" />
+                    <label class="form-check-label" th:for="'course_' + ${course.courseId}" th:text="${course.name}"></label>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">Sign Up</button>
+    </form>
+</div>
+
+<script>
+    // Client-side validation before form submission
+    function submitForm() {
+        // Validate text fields
+        var userName = document.getElementById('username').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var role = document.getElementById('role').value;
+
+        // Check if the required fields are empty
+        if (!userName || !email || !password || !role) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        // Check if at least one course is selected
+        var courseSelected = false;
+        var courseCheckboxes = document.getElementsByName('courseIds');
+        var courseIds = [];
+        for (var i = 0; i < courseCheckboxes.length; i++) {
+            if (courseCheckboxes[i].checked) {
+                courseIds.push(courseCheckboxes[i].value);
+                courseSelected = true;
+            }
+        }
+
+        if (!courseSelected) {
+            alert("Please select at least one course.");
+            return;
+        }
+
+        // Prepare data as JSON
+        var data = {
+            userName: userName,
+            email: email,
+            password: password,
+            role: role,
+            courseIds: courseIds
+        };
+
+        // Send the data via AJAX (fetch API)
+        fetch('/api/users/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.userName) {
+                    alert('User created successfully!');
+                } else {
+                    alert('Failed to create user');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error creating user');
+            });
+    }
+</script>
+
+</body>
+</html>
